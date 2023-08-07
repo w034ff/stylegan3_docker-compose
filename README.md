@@ -110,7 +110,7 @@
     
     - `cbase=16384`: 生成モデルのサイズを小さくすることで、トレーニングを高速化する
     
-    トレーニングのコツ: fid50kのスコアが下がらなくなった場合、すぐにトレーニングを終了する
+    トレーニングのコツ: fid50kのスコアが下がらなくなった場合、すぐにトレーニングを終了してください
     
     より詳細な設定は[Training configurations](https://github.com/NVlabs/stylegan3/blob/main/docs/configs.md)を確認してください
     
