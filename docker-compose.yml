@@ -1,0 +1,28 @@
+version: '3'
+services:
+ fake_image_generate:
+  build:
+   context: .
+   args:
+     - USER_NAME=${USER_NAME}
+     - USER_UID=${USER_UID}
+     - USER_GID=${USER_GID}
+  container_name: 'fake_image_generate'
+  working_dir: /workspace
+  command: /bin/bash
+  tty: true
+  # ports: 
+  # # jupyter case: connect using ssh... "ssh -L 8000:127.0.0.1:8000 user_name@remote_ip"
+  # - "127.0.0.1:8000:8888" #jupyter port : if you run jupyter notebook, please use this command " jupyter notebook --allow-root --NotebookApp.token='' "
+
+  # # tensorboard case: connect using ssh... "ssh -L 6000:127.0.0.1:6000 user_name@remote_ip"
+  # - "127.0.0.1:6000:6006" #tensorboard port
+  volumes:
+   - ./:/workspace:cached
+  deploy:
+   resources:
+    reservations:
+     devices:
+      - driver: nvidia
+        capabilities: [gpu]
+  shm_size: "2gb"
