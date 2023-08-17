@@ -1,4 +1,4 @@
-### Dockerを用いたStyleGAN2, 3の実行環境構築
+## Dockerを用いたStyleGAN2, 3の実行環境構築
 
 ### 作成経緯
 [StyleGAN3](https://github.com/NVlabs/stylegan3)に公開されているDockerfileをもとに、Docker Composeを使用してより使いやすいDocker環境を構築しました
