@@ -18,7 +18,7 @@ services:
   # # tensorboard case: connect using ssh... "ssh -L 6000:127.0.0.1:6000 user_name@remote_ip"
   # - "127.0.0.1:6000:6006" #tensorboard port
   volumes:
-   - ./:/workspace:cached
+   - ..:/workspace:cached
   deploy:
    resources:
     reservations:
