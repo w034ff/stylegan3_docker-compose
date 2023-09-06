@@ -3,6 +3,15 @@
 ### 作成経緯
 [StyleGAN3](https://github.com/NVlabs/stylegan3)に公開されているDockerfileをもとに、Docker Composeを使用してより使いやすいDocker環境を構築しました
 
+## 動作環境
+
+以下の環境で動作確認済み
+
+- Ubuntu 20.04
+- Git 2.25.1
+- Docker 24.0.5
+- CUDA Drive (nvidia driver) 525.125.06
+
 ## 環境構築手順
 
 1. サーバー(PC)にGit, Docker, docker-compose, CUDAをインストール
@@ -19,9 +28,22 @@
     cd stylegan3
     ```
 
-4. このリポジトリの`Dockerfile`, `.env`, `docker-compose.yml`をstylegan3のディレクトリに上書き保存する
+4. stylegan3ディレクトリ上にstylegan3_docker-composeをclone
 
-5. 現在ログイン中のIDなどを`.env`に書き込む
+    ```
+    git clone https://github.com/w034ff/stylegan3_docker-compose.git
+    ```
+
+5. stylegan3_docker-composeディレクトリが作成されるので、cdコマンドでそのディレクトリに移動する
+
+    ```
+    cd stylegan3_docker-compose
+    ```
+
+6. 現在ログイン中のIDなどを`.env`に書き込む
+
+    > **注意**: 
+    > `.env`ファイルは隠しファイルとなっているので注意してください
     
     - 以下のコマンドでuser_name, uid, gidを調べる
     
@@ -43,21 +65,21 @@
         ```
         
     > **注意**: 
-    > `.env`にuser_name, uid, gidを正確に記入しなければ、コンテナの外部からファイルの削除などの操作が難しくなります
+    > `.env`にuser_name, uid, gidを正確に記入しなければ、コンテナの外部からファイル削除などの操作が難しくなります
 
-6. 以下のコマンドでDockerのコンテナをビルドする
+7. 以下のコマンドでDockerのコンテナをビルドする
     
     ```
     docker compose up -d --build
     ```
     
-7. 以下のコマンドでDockerのコンテナ環境に入る
+8. 以下のコマンドでDockerのコンテナ環境に入る
 
     ```
     docker exec -it fake_image_generate bash
     ```
 
-8. StyleGAN2, 3のデータセット作成
+9. StyleGAN2, 3のデータセット作成
 
     - 学習に使用する画像のあるフォルダを`dataset_image`にリネームする
 
@@ -72,7 +94,7 @@
     
     - `--resolution=256x256`: --destの解像度を設定する。ただし解像度は2のn乗(16, 32, 64, 128, etc...)のみ設定できる
 
-9. StyleGAN2, 3のトレーニング
+10. StyleGAN2, 3のトレーニング
 
     #### StyleGAN3の場合
     
@@ -110,12 +132,12 @@
     
     - `cbase=16384`: 生成モデルのサイズを小さくすることで、トレーニングを高速化する
     
-    トレーニングのコツ: fid50kのスコアが下がらなくなった場合、すぐにトレーニングを終了してください
+    #### トレーニングのコツ: fid50kのスコアが下がらなくなった場合、すぐにトレーニングを終了してください
     
-    より詳細な設定は[Training configurations](https://github.com/NVlabs/stylegan3/blob/main/docs/configs.md)を確認してください
+    #### トレーニングの詳細設定は[Training configurations](https://github.com/NVlabs/stylegan3/blob/main/docs/configs.md)を確認してください
     
     
-10. StyleGAN2, 3で偽画像を生成する
+11. StyleGAN2, 3で偽画像を生成する
 
     ```
     python gen_images.py --outdir=fake_output --trunc=1 --seeds=0-16 \
